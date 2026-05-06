@@ -712,11 +712,10 @@ export default function WildAlgarve() {
                     <div style={{ fontSize: "0.7rem", letterSpacing: "0.25em", textTransform: "uppercase", color: C.terracotta, marginBottom: "8px" }}>Step 1 of 3</div>
                     <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.6rem", marginBottom: "28px", color: C.brown }}>When are you coming?</h3>
 
-                                        <label style={{ display: "block", fontSize: "0.7rem", letterSpacing: "0.18em", textTransform: "uppercase", color: C.brownMid, marginBottom: "10px" }}>Your name</label>
-                    <input type="text" className="input" value={name} onChange={e => setName(e.target.value)} placeholder="Jane Doe" style={{ marginBottom: "20px" }} />
+                      <label style={{ display: "block", fontSize: "0.7rem", letterSpacing: "0.18em", textTransform: "uppercase", color: C.brownMid, marginBottom: "10px" }}>Pick a date</label>
+                    <input type="date" className="input" value={date} onChange={e => setDate(e.target.value)} min={new Date().toISOString().split("T")[0]} style={{ marginBottom: "28px" }} />
 
-                    <label style={{ display: "block", fontSize: "0.7rem", letterSpacing: "0.18em", textTransform: "uppercase", color: C.brownMid, marginBottom: "10px" }}>Your email</label>
-                    <input type="email" className="input" value={email} onChange={e => setEmail(e.target.value)} placeholder="jane@example.com" style={{ marginBottom: "28px" }} />
+                    <label style={{ display: "block", fontSize: "0.7rem", letterSpacing: "0.18em", textTransform: "uppercase", color: C.brownMid, marginBottom: "10px" }}>Pick a time slot</label>
 
 
                     <label style={{ display: "block", fontSize: "0.7rem", letterSpacing: "0.18em", textTransform: "uppercase", color: C.brownMid, marginBottom: "10px" }}>Pick a time slot</label>
