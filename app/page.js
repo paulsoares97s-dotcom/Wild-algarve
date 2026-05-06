@@ -706,17 +706,13 @@ export default function WildAlgarve() {
                 background: C.white,
                 padding: isMobile ? "28px 20px" : "44px 40px",
                 boxShadow: "0 4px 28px rgba(61,35,20,0.06)",
-              }}>
-                {step === 1 && (
+              }}>                {step === 1 && (
                   <div>
                     <div style={{ fontSize: "0.7rem", letterSpacing: "0.25em", textTransform: "uppercase", color: C.terracotta, marginBottom: "8px" }}>Step 1 of 3</div>
                     <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.6rem", marginBottom: "28px", color: C.brown }}>When are you coming?</h3>
 
-                      <label style={{ display: "block", fontSize: "0.7rem", letterSpacing: "0.18em", textTransform: "uppercase", color: C.brownMid, marginBottom: "10px" }}>Pick a date</label>
+                    <label style={{ display: "block", fontSize: "0.7rem", letterSpacing: "0.18em", textTransform: "uppercase", color: C.brownMid, marginBottom: "10px" }}>Pick a date</label>
                     <input type="date" className="input" value={date} onChange={e => setDate(e.target.value)} min={new Date().toISOString().split("T")[0]} style={{ marginBottom: "28px" }} />
-
-                    <label style={{ display: "block", fontSize: "0.7rem", letterSpacing: "0.18em", textTransform: "uppercase", color: C.brownMid, marginBottom: "10px" }}>Pick a time slot</label>
-
 
                     <label style={{ display: "block", fontSize: "0.7rem", letterSpacing: "0.18em", textTransform: "uppercase", color: C.brownMid, marginBottom: "10px" }}>Pick a time slot</label>
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
@@ -777,7 +773,10 @@ export default function WildAlgarve() {
                     <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.6rem", marginBottom: "28px", color: C.brown }}>Almost there.</h3>
 
                     <label style={{ display: "block", fontSize: "0.7rem", letterSpacing: "0.18em", textTransform: "uppercase", color: C.brownMid, marginBottom: "10px" }}>Your name</label>
-                    <input type="text" className="input" value={name} onChange={e => setName(e.target.value)} placeholder="Jane Doe" style={{ marginBottom: "28px" }} />
+                    <input type="text" className="input" value={name} onChange={e => setName(e.target.value)} placeholder="Jane Doe" style={{ marginBottom: "20px" }} />
+
+                    <label style={{ display: "block", fontSize: "0.7rem", letterSpacing: "0.18em", textTransform: "uppercase", color: C.brownMid, marginBottom: "10px" }}>Your email</label>
+                    <input type="email" className="input" value={email} onChange={e => setEmail(e.target.value)} placeholder="jane@example.com" style={{ marginBottom: "28px" }} />
 
                     <div style={{ background: C.cream, padding: "24px", marginBottom: "20px" }}>
                       {[
@@ -799,7 +798,7 @@ export default function WildAlgarve() {
                     </div>
 
                     <p style={{ fontSize: "0.8rem", color: C.brownMid, lineHeight: 1.6 }}>
-                      Hit confirm and we'll send a WhatsApp to lock in your spot. Payment in cash or by card on the day.
+                      Hit confirm and you'll be redirected to a secure payment page.
                     </p>
                   </div>
                 )}
@@ -815,9 +814,8 @@ export default function WildAlgarve() {
                   <button className="btn" onClick={goNext} disabled={paying || (step === 1 && (!date || !time)) || (step === 3 && (!name || !email))} style={{ flex: isMobile ? 1 : "0 0 auto", maxWidth: isMobile ? "none" : "320px" }}>
                     <span>{paying ? "Redirecting..." : step === 3 ? "Pay & Book →" : "Continue →"}</span>
                   </button>
-
-                    
                 </div>
+
               </div>
             </Reveal>
           ) : (
