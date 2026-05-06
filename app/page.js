@@ -81,6 +81,17 @@ export default function WildAlgarve() {
     };
   }, []);
 
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("booking") === "success") {
+      setConfirmed(true);
+      setTimeout(() => {
+        document.getElementById("booking")?.scrollIntoView({ behavior: "smooth" });
+      }, 300);
+      window.history.replaceState({}, "", "/");
+    }
+  }, []);
+
   const total = adults * 59 + kids * 39;
   const totalPeople = adults + kids;
 
