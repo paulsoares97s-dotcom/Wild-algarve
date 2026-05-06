@@ -813,12 +813,11 @@ export default function WildAlgarve() {
                       letterSpacing: "0.1em", textTransform: "uppercase",
                     }}>← Back</button>
                   ) : <div />}
-                                    <button className="btn" onClick={goNext} disabled={paying || (step === 1 && (!date || !time)) || (step === 3 && (!name || !email))} style={{ flex: isMobile ? 1 : "0 0 auto", maxWidth: isMobile ? "none" : "320px" }}>
+                  <button className="btn" onClick={goNext} disabled={paying || (step === 1 && (!date || !time)) || (step === 3 && (!name || !email))} style={{ flex: isMobile ? 1 : "0 0 auto", maxWidth: isMobile ? "none" : "320px" }}>
                     <span>{paying ? "Redirecting..." : step === 3 ? "Pay & Book →" : "Continue →"}</span>
                   </button>
 
-                    <span>{step === 3 ? "Confirm booking →" : "Continue →"}</span>
-                  </button>
+                    
                 </div>
               </div>
             </Reveal>
