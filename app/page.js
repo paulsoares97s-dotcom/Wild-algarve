@@ -64,6 +64,8 @@ export default function WildAlgarve() {
   const [adults, setAdults] = useState(2);
   const [kids, setKids] = useState(0);
   const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+  const [paying, setPaying] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -87,9 +89,30 @@ export default function WildAlgarve() {
     setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" }), 100);
   };
 
-  const goNext = () => {
-    if (step < 3) setStep(step + 1);
-    else setConfirmed(true);
+    const goNext = async () => {
+    if (step < 3) {
+      setStep(step + 1);
+      return;
+    }
+    
+    setPaying(true);
+    try {
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ date, time, adults, kids, name, email }),
+      });
+      const data = await response.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        alert("Something went wrong. Please try again or contact us on WhatsApp.");
+        setPaying(false);
+      }
+    } catch (error) {
+      alert("Connection error. Please try again or contact us on WhatsApp.");
+      setPaying(false);
+    }
   };
 
   return (
@@ -689,8 +712,12 @@ export default function WildAlgarve() {
                     <div style={{ fontSize: "0.7rem", letterSpacing: "0.25em", textTransform: "uppercase", color: C.terracotta, marginBottom: "8px" }}>Step 1 of 3</div>
                     <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.6rem", marginBottom: "28px", color: C.brown }}>When are you coming?</h3>
 
-                    <label style={{ display: "block", fontSize: "0.7rem", letterSpacing: "0.18em", textTransform: "uppercase", color: C.brownMid, marginBottom: "10px" }}>Pick a date</label>
-                    <input type="date" className="input" value={date} onChange={e => setDate(e.target.value)} min={new Date().toISOString().split("T")[0]} style={{ marginBottom: "28px" }} />
+                                        <label style={{ display: "block", fontSize: "0.7rem", letterSpacing: "0.18em", textTransform: "uppercase", color: C.brownMid, marginBottom: "10px" }}>Your name</label>
+                    <input type="text" className="input" value={name} onChange={e => setName(e.target.value)} placeholder="Jane Doe" style={{ marginBottom: "20px" }} />
+
+                    <label style={{ display: "block", fontSize: "0.7rem", letterSpacing: "0.18em", textTransform: "uppercase", color: C.brownMid, marginBottom: "10px" }}>Your email</label>
+                    <input type="email" className="input" value={email} onChange={e => setEmail(e.target.value)} placeholder="jane@example.com" style={{ marginBottom: "28px" }} />
+
 
                     <label style={{ display: "block", fontSize: "0.7rem", letterSpacing: "0.18em", textTransform: "uppercase", color: C.brownMid, marginBottom: "10px" }}>Pick a time slot</label>
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
@@ -786,7 +813,10 @@ export default function WildAlgarve() {
                       letterSpacing: "0.1em", textTransform: "uppercase",
                     }}>← Back</button>
                   ) : <div />}
-                  <button className="btn" onClick={goNext} disabled={(step === 1 && (!date || !time)) || (step === 3 && !name)} style={{ flex: isMobile ? 1 : "0 0 auto", maxWidth: isMobile ? "none" : "320px" }}>
+                                    <button className="btn" onClick={goNext} disabled={paying || (step === 1 && (!date || !time)) || (step === 3 && (!name || !email))} style={{ flex: isMobile ? 1 : "0 0 auto", maxWidth: isMobile ? "none" : "320px" }}>
+                    <span>{paying ? "Redirecting..." : step === 3 ? "Pay & Book →" : "Continue →"}</span>
+                  </button>
+
                     <span>{step === 3 ? "Confirm booking →" : "Continue →"}</span>
                   </button>
                 </div>
